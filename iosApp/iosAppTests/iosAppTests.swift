@@ -7,6 +7,8 @@
 //
 
 import XCTest
+import KotlinLibrary
+
 @testable import iosApp
 
 class iosAppTests: XCTestCase {
