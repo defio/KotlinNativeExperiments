@@ -1,0 +1,4 @@
+include ':kotlinLibrary'
+include ':kotlinLibrary:common'
+include ':kotlinLibrary:android'
+include ':kotlinLibrary:ios'
