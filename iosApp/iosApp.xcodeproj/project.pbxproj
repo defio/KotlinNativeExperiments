@@ -15,7 +15,6 @@
 		DB65A8F720D9A408003014BF /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB65A8F620D9A408003014BF /* iosAppTests.swift */; };
 		DB65A90F20D9A4E9003014BF /* KotlinLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB65A90620D9A4E8003014BF /* KotlinLibrary.framework */; };
 		DB65A91620D9A4E9003014BF /* KotlinLibraryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB65A91520D9A4E9003014BF /* KotlinLibraryTests.m */; };
-		DB65A91820D9A4E9003014BF /* KotlinLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = DB65A90820D9A4E8003014BF /* KotlinLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB65A91B20D9A4E9003014BF /* KotlinLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB65A90620D9A4E8003014BF /* KotlinLibrary.framework */; };
 		DB65A91C20D9A4E9003014BF /* KotlinLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DB65A90620D9A4E8003014BF /* KotlinLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -82,6 +81,8 @@
 		DB65A90E20D9A4E9003014BF /* KotlinLibraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KotlinLibraryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB65A91520D9A4E9003014BF /* KotlinLibraryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KotlinLibraryTests.m; sourceTree = "<group>"; };
 		DB65A91720D9A4E9003014BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB65A92B20D9A7CC003014BF /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ios; path = ../kotlinLibrary/ios; sourceTree = "<group>"; };
+		DB65A92C20D9A7D9003014BF /* common */ = {isa = PBXFileReference; lastKnownFileType = folder; name = common; path = ../kotlinLibrary/common; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,13 +95,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DB65A8EF20D9A408003014BF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DB65A90220D9A4E8003014BF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -121,6 +115,8 @@
 		DB65A8D520D9A407003014BF = {
 			isa = PBXGroup;
 			children = (
+				DB65A92C20D9A7D9003014BF /* common */,
+				DB65A92B20D9A7CC003014BF /* ios */,
 				DB65A8E020D9A407003014BF /* iosApp */,
 				DB65A8F520D9A408003014BF /* iosAppTests */,
 				DB65A90720D9A4E8003014BF /* KotlinLibrary */,
@@ -182,17 +178,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		DB65A90320D9A4E8003014BF /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DB65A91820D9A4E9003014BF /* KotlinLibrary.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		DB65A8DD20D9A407003014BF /* iosApp */ = {
 			isa = PBXNativeTarget;
@@ -235,10 +220,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB65A91D20D9A4E9003014BF /* Build configuration list for PBXNativeTarget "KotlinLibrary" */;
 			buildPhases = (
-				DB65A90120D9A4E8003014BF /* Sources */,
-				DB65A90220D9A4E8003014BF /* Frameworks */,
-				DB65A90320D9A4E8003014BF /* Headers */,
-				DB65A90420D9A4E8003014BF /* Resources */,
+				DB65A92A20D9A7B0003014BF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -333,13 +315,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DB65A90420D9A4E8003014BF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		DB65A90C20D9A4E9003014BF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -348,6 +323,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DB65A92A20D9A7B0003014BF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/../gradlew\" -p \"$SRCROOT/../kotlinLibrary/ios\" \"$KONAN_TASK\" \\\n-Pkonan.configuration.build.dir=\"$CONFIGURATION_BUILD_DIR\"        \\\n-Pkonan.debugging.symbols=\"$DEBUGGING_SYMBOLS\"                    \\\n-Pkonan.optimizations.enable=\"$KONAN_ENABLE_OPTIMIZATIONS\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DB65A8DA20D9A407003014BF /* Sources */ = {
@@ -364,13 +355,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB65A8F720D9A408003014BF /* iosAppTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DB65A90120D9A4E8003014BF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
