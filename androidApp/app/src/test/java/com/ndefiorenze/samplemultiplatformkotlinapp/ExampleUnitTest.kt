@@ -2,6 +2,7 @@ package com.ndefiorenze.samplemultiplatformkotlinapp
 
 import com.ndefiorenze.EnumWithValue
 import com.ndefiorenze.Greeting
+import com.ndefiorenze.KotlinObject
 import com.ndefiorenze.SealedClassExample
 import com.ndefiorenze.SimpleEnum
 import org.junit.Assert.assertEquals
@@ -59,6 +60,36 @@ class ExampleUnitTest {
         assertTrue(sealed === SealedClassExample.Error)
     }
 
+    @Test
+    fun usageOfKotlinObject() {
+        assertTrue(KotlinObject === KotlinObject)
+    }
 
+    @Test
+    fun usageOfKotlinObject_properties() {
+        playWithIntProperty()
+        playWithNullableAnyProperty()
+        playWithNullableStringProperty()
+    }
+
+    private fun playWithIntProperty() {
+        assertTrue(KotlinObject.internalStateInt == KotlinObject.INITIAL_VALUE_FOR_INT_PROPERTY)
+        KotlinObject.internalStateInt = 123
+        assertTrue(KotlinObject.internalStateInt == 123)
+    }
+
+    private fun playWithNullableAnyProperty() {
+        assertTrue(KotlinObject.internalStateNullableAny == KotlinObject.INITIAL_VALUE_FOR_NULLABLE_ANY_PROPERTY)
+        KotlinObject.internalStateNullableAny = 123
+        assertTrue(KotlinObject.internalStateInt == 123)
+        KotlinObject.internalStateNullableAny = "Now I'm a string"
+        assertTrue(KotlinObject.internalStateNullableAny == "Now I'm a string")
+    }
+
+    private fun playWithNullableStringProperty() {
+        assertTrue(KotlinObject.internalStateNullableString == KotlinObject.INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY)
+        KotlinObject.internalStateNullableString = "Now I'm not null"
+        assertTrue(KotlinObject.internalStateNullableString == "Now I'm not null")
+    }
 
 }

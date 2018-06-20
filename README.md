@@ -3,19 +3,23 @@ This repo is a Kotlin Native playground.
 
 I've followed the [official guide](https://github.com/JetBrains/kotlin-native/blob/master/MULTIPLATFORM.md) to setup the iOS and the Android modules
 
-This is the things that i wanna explore:
+This is the things that I wanna explore:
 
-- [x] Enum
-- [x] Enum with arguments
+- [x] Enums
+- [x] Enums with arguments
 - [x] Sealed classes
-- [ ] Object 
+- [x] Objects
+- [x] Nullability
+- [ ] Companion objects
+- [ ] Generics
+- [ ] Higher-Order Functions and Lambdas
 - [ ] Unit tests in the common module
 - [ ] Distribution as library
    - [ ] maven for the (android + common) as android library
    - [ ] cocoapods for the (iOS + common) as framework
 
 
-### Enum
+## Enums
 
 Enum definition
 ```kotlin
@@ -48,7 +52,7 @@ func testUsageOfSimpleEnum() {
 }
 ```
 
-### Enum with arguments
+## Enums with arguments
 
 Enum definition
 ```kotlin
@@ -77,7 +81,7 @@ func testUsageOfEnumWithValue() {
 }
 ```
 
-### Sealed class
+## Sealed classes
 
 sealed class definition
 ```kotlin
@@ -134,3 +138,108 @@ private func assertErrorInstance(selead : KotlinLibrarySealedClassExample){
     XCTAssert(selead is KotlinLibrarySealedClassExampleError)
 }
 ```
+
+## Objects
+
+Object definition
+```kotlin
+object KotlinObject {
+    val INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY = null
+    const val INITIAL_VALUE_FOR_INT_PROPERTY = 0
+    const val INITIAL_VALUE_FOR_NULLABLE_ANY_PROPERTY = "any variable initial state"
+
+    var internalStateNullableString: String? = INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY
+    var internalStateInt: Int = INITIAL_VALUE_FOR_INT_PROPERTY
+    var internalStateNullableAny: Any? = INITIAL_VALUE_FOR_NULLABLE_ANY_PROPERTY
+
+}
+```
+
+#### Android
+As usual, no surprises
+
+```kotlin
+@Test
+fun usageOfKotlinObject() {
+    assertTrue(KotlinObject === KotlinObject)
+}
+```
+#### iOS
+Well, even here in the ios module the kotlin object is a singleton :tada:
+`KotlinLibraryKotlinObject()` give us always the same instance
+
+```swift
+func testKotlinObjectUsage() {
+    XCTAssert(KotlinLibraryKotlinObject() === KotlinLibraryKotlinObject())
+}
+```
+
+## Objects
+
+Reusing the object defined in the section above
+
+#### Android
+Once again, no surprises
+
+```kotlin
+@Test
+fun usageOfKotlinObject_properties() {
+    playWithIntProperty()
+    playWithNullableAnyProperty()
+    playWithNullableStringProperty()
+}
+
+private fun playWithIntProperty() {
+    assertTrue(KotlinObject.internalStateInt == KotlinObject.INITIAL_VALUE_FOR_INT_PROPERTY)
+    KotlinObject.internalStateInt = 123
+    assertTrue(KotlinObject.internalStateInt == 123)
+}
+
+private fun playWithNullableAnyProperty() {
+    assertTrue(KotlinObject.internalStateNullableAny == KotlinObject.INITIAL_VALUE_FOR_NULLABLE_ANY_PROPERTY)
+    KotlinObject.internalStateNullableAny = 123
+    assertTrue(KotlinObject.internalStateInt == 123)
+    KotlinObject.internalStateNullableAny = "Now I'm a string"
+    assertTrue(KotlinObject.internalStateNullableAny == "Now I'm a string")
+}
+
+private fun playWithNullableStringProperty() {
+    assertTrue(KotlinObject.internalStateNullableString == KotlinObject.INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY)
+    KotlinObject.internalStateNullableString = "Now I'm not null"
+    assertTrue(KotlinObject.internalStateNullableString == "Now I'm not null")
+}
+```
+#### iOS
+There's something weird happening
+
+```swift
+func testKotlinObjectUsage_properties() {
+    playWithIntProperty()
+    playWithNullableAnyProperty()
+    playWithNullableStringProperty()
+}
+
+private func playWithIntProperty(){
+    XCTAssert(KotlinLibraryKotlinObject().internalStateInt == KotlinLibraryKotlinObject().initial_VALUE_FOR_INT_PROPERTY) // #1
+    KotlinLibraryKotlinObject().internalStateInt = 123
+    XCTAssert(KotlinLibraryKotlinObject().internalStateInt == 123)
+}
+
+private func playWithNullableAnyProperty(){
+    XCTAssert((KotlinLibraryKotlinObject().internalStateNullableAny as! String) == KotlinLibraryKotlinObject().initial_VALUE_FOR_NULLABLE_ANY_PROPERTY) 
+    KotlinLibraryKotlinObject().internalStateNullableAny = 123
+    XCTAssert((KotlinLibraryKotlinObject().internalStateNullableAny as! Int) == 123) 
+    KotlinLibraryKotlinObject().internalStateNullableAny = "Now I'm a string"
+    XCTAssert((KotlinLibraryKotlinObject().internalStateNullableAny as! String) == "Now I'm a string")
+}
+
+private func playWithNullableStringProperty(){
+    XCTAssert(KotlinLibraryKotlinObject().internalStateNullableString == (KotlinLibraryKotlinObject().initial_VALUE_FOR_NULLABLE_STRING_PROPERTY as! String?)) #2
+    KotlinLibraryKotlinObject().internalStateNullableString = "Now I'm not null"
+    XCTAssert(KotlinLibraryKotlinObject().internalStateNullableString! == "Now I'm not null")
+}
+```
+
+1. the kotlin val defined as `const val INITIAL_VALUE_FOR_INT_PROPERTY = 0` is mapped in `initial_VALUE_FOR_INT_PROPERTY` with "initial" lowercase
+2. the kotlin val defined as `val INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY = null` has `Nothing?` as type [(doc as reference :grimacing:)](https://kotlinlang.org/docs/reference/exceptions.html#the-nothing-type).
+Xcode tell us that the kotlin val was mapped into a `ar initial_VALUE_FOR_NULLABLE_STRING_PROPERTY: KotlinLibraryStdlibNothing? ` so, a cast to `String?` seems to be inevitable
