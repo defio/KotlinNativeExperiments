@@ -1,3 +1,4 @@
 android/build
 ios/build
+common/build
 *.iml
