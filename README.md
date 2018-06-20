@@ -242,4 +242,4 @@ private func playWithNullableStringProperty(){
 
 1. the kotlin val defined as `const val INITIAL_VALUE_FOR_INT_PROPERTY = 0` is mapped in `initial_VALUE_FOR_INT_PROPERTY` with "initial" lowercase
 2. the kotlin val defined as `val INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY = null` has `Nothing?` as type [(doc as reference :grimacing:)](https://kotlinlang.org/docs/reference/exceptions.html#the-nothing-type).
-Xcode tell us that the kotlin val was mapped into a `ar initial_VALUE_FOR_NULLABLE_STRING_PROPERTY: KotlinLibraryStdlibNothing? ` so, a cast to `String?` seems to be inevitable
+Xcode tell us that the kotlin val was mapped into a `var initial_VALUE_FOR_NULLABLE_STRING_PROPERTY: KotlinLibraryStdlibNothing? ` so, a cast to `String?` seems to be inevitable
