@@ -1,6 +1,12 @@
 ## User settings
 xcuserdata/
 
+# XCode
+*.bak
+project.xcworkspace
+DerivedData
+archives
+
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
 *.xccheckout
@@ -17,3 +23,4 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
+

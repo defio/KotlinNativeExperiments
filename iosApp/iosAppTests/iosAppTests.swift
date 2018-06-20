@@ -25,4 +25,20 @@ class iosAppTests: XCTestCase {
         XCTAssert(KotlinLibraryEnumWithValue.one.associatedValue == 1)
         XCTAssert(KotlinLibraryEnumWithValue.two.associatedValue == 2)
     }
+    
+    func testSealedClassUsage() {
+        let successMessage = "I'm the winner"
+        assertSuccessInstance(selead : KotlinLibrarySealedClassExampleSuccess(successMessage: successMessage), expectedMessage : successMessage)
+        assertErrorInstance(selead : KotlinLibrarySealedClassExampleError())
+    }
+    
+    private func assertSuccessInstance(selead : KotlinLibrarySealedClassExample, expectedMessage: String){
+        XCTAssert(selead is KotlinLibrarySealedClassExampleSuccess,"Failed: sealed is \(String(describing: selead.self))")
+        let success = selead as! KotlinLibrarySealedClassExampleSuccess
+        XCTAssert(success.successMessage == expectedMessage,"Failed: message is '\(String(describing: success.successMessage))' the expected is '\(String(describing: expectedMessage))' ")
+    }
+    
+    private func assertErrorInstance(selead : KotlinLibrarySealedClassExample){
+        XCTAssert(selead is KotlinLibrarySealedClassExampleError)
+    }
 }
