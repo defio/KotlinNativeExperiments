@@ -58,5 +58,13 @@
     <orderEntry type="library" exported="" name="annotations-13.0" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="kotlin-stdlib-common-1.2.41" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="kotlin-stdlib-common-1.2.41" level="project" />
+    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
+    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
+    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
+    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
+    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
+    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
+    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
+    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
   </component>
 </module>
