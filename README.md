@@ -174,7 +174,7 @@ func testKotlinObjectUsage() {
 }
 ```
 
-## Objects
+## Nullability
 
 Reusing the object defined in the section above
 
