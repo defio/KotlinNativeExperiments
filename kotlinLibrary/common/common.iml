@@ -46,13 +46,5 @@
     <orderEntry type="jdk" jdkName="Kotlin SDK" jdkType="KotlinSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="kotlin-stdlib-common-1.2.41" level="project" />
-    <orderEntry type="library" exported="" name="common.common-1.0" level="project" />
-    <orderEntry type="library" exported="" name="common.common-1.0" level="project" />
-    <orderEntry type="library" exported="" name="common.common-1.0" level="project" />
-    <orderEntry type="library" exported="" name="common.common-1.0" level="project" />
-    <orderEntry type="library" exported="" name="common.common-1.0" level="project" />
-    <orderEntry type="library" exported="" name="common.common-1.0" level="project" />
-    <orderEntry type="library" exported="" name="common.common-1.0" level="project" />
-    <orderEntry type="library" exported="" name="common.common-1.0" level="project" />
   </component>
 </module>

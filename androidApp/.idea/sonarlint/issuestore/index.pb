@@ -11,3 +11,10 @@ Qapp/src/test/java/com/ndefiorenze/samplemultiplatformkotlinapp/ExampleUnitTest.
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
+;
+app/app.iml,7/c/7c1d2a1927c01fa75a9b4c74ea8addcc06b327ae
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+>
+app/.gitignore,5/1/51e1c5d383dfaa35e0e7e5873a0a99355a86880f

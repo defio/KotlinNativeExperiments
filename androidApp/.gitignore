@@ -3,6 +3,8 @@
 /local.properties
 /.idea/libraries
 /.idea/modules.xml
+/.idea/caches
+/.idea/sonarlint
 /.idea/workspace.xml
 .DS_Store
 /build
