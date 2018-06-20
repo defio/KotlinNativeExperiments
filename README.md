@@ -29,7 +29,7 @@ enum class SimpleEnum{
 ```
 
 #### Android
-Into the android module I'm able to do all the common stuff that we are used to do with enums (access to the cases, iterate and count). So we can write a test that look like
+Into the android module I'm able to do all the common stuff that we are used to do with enums (access to the cases, iterate and count). So we can write a test that looks like
 
 ```kotlin
 @Test
@@ -42,7 +42,7 @@ fun usageOfSimpleEnum() {
 ```
 #### iOS
 Into the ios module I can access to the enum cases, but I don't know how iterate or get the enum size.
-So we can write a test that look like
+So we can write a test that looks like
 
 ```swift
 func testUsageOfSimpleEnum() {
@@ -73,7 +73,7 @@ fun usageOfEnumWithValue() {
 }
 ```
 #### iOS
-As above, the same "issues" with the enum still be present even with the enums with values. At least we can access the value of the variable:
+As above, the same "issues" with the enum are still present even with the enums with values. At least we can access the value of the variable:
 ```swift
 func testUsageOfEnumWithValue() {
     XCTAssert(KotlinLibraryEnumWithValue.one.associatedValue == 1)
@@ -92,7 +92,7 @@ sealed class SealedClassExample {
 ```
 
 #### Android
-As usual into the android module we can do everything we expect with an sealed class. So the test can be:
+As usual into the android module we can do everything we expect with a sealed class. So the test can be:
 ```kotlin
 @Test
 fun usageOfSealedClass() {
