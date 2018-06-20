@@ -1,5 +1,6 @@
 package com.ndefiorenze.samplemultiplatformkotlinapp
 
+import com.ndefiorenze.EnumWithValue
 import com.ndefiorenze.Greeting
 import com.ndefiorenze.SimpleEnum
 import org.junit.Assert.assertEquals
@@ -24,4 +25,13 @@ class ExampleUnitTest {
             println(it)
         }
     }
+
+    @Test
+    fun usageOfEnumWithValue() {
+        assertEquals(2, EnumWithValue.values().size)
+        EnumWithValue.values().forEach {
+            println("$it : ${it.associatedValue}")
+        }
+    }
+
 }

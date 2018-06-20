@@ -12,12 +12,17 @@ import KotlinLibrary
 class iosAppTests: XCTestCase {
     
     func testExample() {
-        assert(KotlinLibraryGreeting().greeting() == "Hello, iOS")
+        XCTAssert(KotlinLibraryGreeting().greeting() == "Hello, iOS")
     }
     
     func testUsageOfSimpleEnum() {
         print(KotlinLibrarySimpleEnum.first)
         print(KotlinLibrarySimpleEnum.second)
         print(KotlinLibrarySimpleEnum.third)
+    }
+    
+    func testUsageOfEnumWithValue() {
+        XCTAssert(KotlinLibraryEnumWithValue.one.associatedValue == 1)
+        XCTAssert(KotlinLibraryEnumWithValue.two.associatedValue == 2)
     }
 }

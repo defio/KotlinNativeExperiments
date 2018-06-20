@@ -6,7 +6,7 @@ I've followed the [official guide](https://github.com/JetBrains/kotlin-native/bl
 This is the things that i wanna explore:
 
 - [x] Enum
-- [ ] Enum with arguments
+- [x] Enum with arguments
 - [ ] Sealed classes
 - [ ] Object 
 - [ ] Unit tests in the common module
@@ -20,10 +20,11 @@ This is the things that i wanna explore:
 Enum definition
 ```kotlin
 enum class SimpleEnum{
-    FIRST,SECOND,THIRD
+    FIRST, SECOND, THIRD
 }
 ```
 
+#### Android
 Into the android module I'm able to do all the common stuff that we are used to do with enums (access to the cases, iterate and count). So we can write a test that look like
 
 ```kotlin
@@ -35,7 +36,7 @@ fun usageOfSimpleEnum() {
     }
 }
 ```
-
+#### iOS
 Into the ios module I can access to the enum cases, but I don't know how iterate or get the enum size.
 So we can write a test that look like
 
@@ -44,5 +45,34 @@ func testUsageOfSimpleEnum() {
     print(KotlinLibrarySimpleEnum.first)
     print(KotlinLibrarySimpleEnum.second)
     print(KotlinLibrarySimpleEnum.third)
+}
+```
+
+### Enum with arguments
+
+Enum definition
+```kotlin
+enum class EnumWithValue(val associatedValue: Int) {
+    ONE(1),
+    TWO(2)
+}
+```
+#### Android
+As in the previous section, even with the enums with argument, we can do everything we expect with an enum. So the test can be:
+```kotlin
+@Test
+fun usageOfEnumWithValue() {
+    assertEquals(2, EnumWithValue.values().size)
+    EnumWithValue.values().forEach {
+        println("$it : ${it.associatedValue}")
+    }
+}
+```
+#### iOS
+As above, the same "issues" with the enum still be present even with the enums with values. At least we can access the value of the variable:
+```swift
+func testUsageOfEnumWithValue() {
+    XCTAssert(KotlinLibraryEnumWithValue.one.associatedValue == 1)
+    XCTAssert(KotlinLibraryEnumWithValue.two.associatedValue == 2)
 }
 ```
