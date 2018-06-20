@@ -1,9 +1,9 @@
 package com.ndefiorenze.samplemultiplatformkotlinapp
 
 import com.ndefiorenze.Greeting
+import com.ndefiorenze.SimpleEnum
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -15,5 +15,13 @@ class ExampleUnitTest {
     @Test
     fun sampleTest() {
         assertEquals("Hello, Android", Greeting().greeting())
+    }
+
+    @Test
+    fun usageOfSimpleEnum() {
+        assertEquals(3, SimpleEnum.values().size)
+        SimpleEnum.values().forEach {
+            println(it)
+        }
     }
 }

@@ -15,4 +15,9 @@ class iosAppTests: XCTestCase {
         assert(KotlinLibraryGreeting().greeting() == "Hello, iOS")
     }
     
+    func testUsageOfSimpleEnum() {
+        print(KotlinLibrarySimpleEnum.first)
+        print(KotlinLibrarySimpleEnum.second)
+        print(KotlinLibrarySimpleEnum.third)
+    }
 }
