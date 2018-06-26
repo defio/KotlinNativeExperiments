@@ -10,7 +10,7 @@ This is the things that I wanna explore:
 - [x] Sealed classes
 - [x] Objects
 - [x] Nullability
-- [ ] Companion objects
+- [x] Companion objects
 - [ ] Generics
 - [ ] Higher-Order Functions and Lambdas
 - [ ] Unit tests in the common module
@@ -243,3 +243,57 @@ private func playWithNullableStringProperty(){
 1. the kotlin val defined as `const val INITIAL_VALUE_FOR_INT_PROPERTY = 0` is mapped in `initial_VALUE_FOR_INT_PROPERTY` with "initial" lowercase
 2. the kotlin val defined as `val INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY = null` has `Nothing?` as type [(doc as reference :grimacing:)](https://kotlinlang.org/docs/reference/exceptions.html#the-nothing-type).
 Xcode tell us that the kotlin val was mapped into a `var initial_VALUE_FOR_NULLABLE_STRING_PROPERTY: KotlinLibraryStdlibNothing? ` so, a cast to `String?` seems to be inevitable
+
+## Companion Objects
+
+Companion object definition
+```kotlin
+class Container(val state: String) {
+
+    fun getDecoratedState(): String {
+        return "${sharedVar ?: ""} $state"
+    }
+
+    companion object {
+        const val MY_SUPER_NICE_CONST = 12
+
+        var sharedVar: String? = null
+    }
+}
+```
+
+#### Android
+As usual, no surprises
+
+```kotlin
+@Test
+fun usageOfCompanionObject() {
+    assertEquals(12, Container.MY_SUPER_NICE_CONST)
+    val firstContainer = Container("first")
+    val secondContainer = Container("second")
+
+    assertFalse(firstContainer === secondContainer)
+
+    Container.sharedVar = "Hello"
+
+    assertEquals("Hello first", firstContainer.getDecoratedState())
+    assertEquals("Hello second", secondContainer.getDecoratedState())
+}
+```
+#### iOS
+As we could see into the objects section, even the swift usage of a companion object is straightforward
+
+```swift
+func testCompanionObjectUsage() {
+    XCTAssertEqual(12, KotlinLibraryContainerCompanion().my_SUPER_NICE_CONST)
+    let firstContainer = KotlinLibraryContainer(state: "first")
+    let secondContainer = KotlinLibraryContainer(state: "second")
+    
+    XCTAssertFalse(firstContainer === secondContainer)
+    
+    KotlinLibraryContainerCompanion().sharedVar = "Hello"
+    
+    XCTAssert(firstContainer.getDecoratedState() == "Hello first")
+    XCTAssert(secondContainer.getDecoratedState() == "Hello second")
+}
+```

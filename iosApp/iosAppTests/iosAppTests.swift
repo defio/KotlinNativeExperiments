@@ -71,4 +71,17 @@ class iosAppTests: XCTestCase {
         KotlinLibraryKotlinObject().internalStateNullableString = "Now I'm not null"
         XCTAssert(KotlinLibraryKotlinObject().internalStateNullableString! == "Now I'm not null")
     }
+    
+    func testCompanionObjectUsage() {
+        XCTAssertEqual(12, KotlinLibraryContainerCompanion().my_SUPER_NICE_CONST)
+        let firstContainer = KotlinLibraryContainer(state: "first")
+        let secondContainer = KotlinLibraryContainer(state: "second")
+        
+        XCTAssertFalse(firstContainer === secondContainer)
+        
+        KotlinLibraryContainerCompanion().sharedVar = "Hello"
+        
+        XCTAssert(firstContainer.getDecoratedState() == "Hello first")
+        XCTAssert(secondContainer.getDecoratedState() == "Hello second")
+    }
 }

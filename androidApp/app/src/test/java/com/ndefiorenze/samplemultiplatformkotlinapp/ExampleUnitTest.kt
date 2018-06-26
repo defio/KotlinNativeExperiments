@@ -1,11 +1,13 @@
 package com.ndefiorenze.samplemultiplatformkotlinapp
 
+import com.ndefiorenze.Container
 import com.ndefiorenze.EnumWithValue
 import com.ndefiorenze.Greeting
 import com.ndefiorenze.KotlinObject
 import com.ndefiorenze.SealedClassExample
 import com.ndefiorenze.SimpleEnum
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -90,6 +92,20 @@ class ExampleUnitTest {
         assertTrue(KotlinObject.internalStateNullableString == KotlinObject.INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY)
         KotlinObject.internalStateNullableString = "Now I'm not null"
         assertTrue(KotlinObject.internalStateNullableString == "Now I'm not null")
+    }
+
+    @Test
+    fun usageOfCompanionObject() {
+        assertEquals(12, Container.MY_SUPER_NICE_CONST)
+        val firstContainer = Container("first")
+        val secondContainer = Container("second")
+
+        assertFalse(firstContainer === secondContainer)
+
+        Container.sharedVar = "Hello"
+
+        assertEquals("Hello first", firstContainer.getDecoratedState())
+        assertEquals("Hello second", secondContainer.getDecoratedState())
     }
 
 }
