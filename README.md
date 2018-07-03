@@ -3,7 +3,7 @@ This repo is a Kotlin Native playground.
 
 I've followed the [official guide](https://github.com/JetBrains/kotlin-native/blob/master/MULTIPLATFORM.md) to setup the iOS and the Android modules
 
-This is the things that I wanna explore:
+These are the things that I wanna explore:
 
 - [x] Enums
 - [x] Enums with arguments
@@ -52,9 +52,6 @@ This is the things that I wanna explore:
     - [Generics](#generics)
             - [Android](#android)
             - [iOS](#ios)
-                - [testGenericsBasicUsage :pensive:](#testgenericsbasicusage-pensive)
-                - [testGenericsUsage :tada:](#testgenericsusage-tada)
-                - [testGenericsMapUsage :thinking:](#testgenericsmapusage-thinking)
 
 <!-- /TOC -->
 
@@ -434,9 +431,9 @@ fun higherOrderFunctionBothUsage() {
 
 Kotlin **top level functions** are accessible directly from `KotlinLibrary`.
 
-Also the **extension function** are accessible via `KotlinLibrary`. As we could expect, since kotlin generates objective-c code, extensions can not be invoked directly on the type that extend.
+Also the **extension functions** are accessible via `KotlinLibrary`. As we could expect, since kotlin generates objective-c code, extensions can not be invoked directly on the type that extend.
 
-The higher order functions seems to be mapped as function pointers, for this reason the parameters defined as `double` in kotlin are now `NSNumber`
+The higher order functions seem to be mapped as function pointers, for this reason the parameters defined as `double` in kotlin are now `NSNumber`
 
 ```swift
 func testTopLevelFunctionUsage() {
@@ -469,7 +466,6 @@ func testHigherOrderFunctionBothUsage() {
 
 ## DSL
 
-From the [official documentation](https://kotlinlang.org/docs/reference/type-safe-builders.html#type-safe-builders)
 
 >By using well-named functions as builders in combination with function literals 
 >with receiver it is possible to create type-safe, statically-typed builders in >Kotlin.  
@@ -479,6 +475,8 @@ From the [official documentation](https://kotlinlang.org/docs/reference/type-saf
 > - Generating markup with Kotlin code, such as HTML or XML;
 > - Programmatically laying out UI components: Anko
 > - Configuring routes for a web server: Ktor.
+>
+> -- from [official documentation](https://kotlinlang.org/docs/reference/type-safe-builders.html#type-safe-builders)
 
 Here everything we need for define a micro DSL:
 
@@ -569,7 +567,7 @@ class Cat : Animal {
 }
 ```
 
-`Box` is a generic container, `AnimalBox` is a container that allow only subclasses of `Animal` as element.
+`Box` is a generic container, `AnimalBox` is a container that allows only subclasses of `Animal` as element.
 
 `mapIntegersToStrings` is a top level property, map with `int` key and `string` values
 
@@ -651,14 +649,14 @@ func testGenericsMapUsage() {
 }
 ```
 
-##### testGenericsBasicUsage :pensive:
+**testGenericsBasicUsage** :pensive:
 
-Into `testGenericsBasicUsage` we can see that `Box<T>` element is mapped as a nullable pointer to any type `@property id _Nullable elemet;`. For this reason we can do `intBox.elemet = "World"` without compilation erros. 
+Into `testGenericsBasicUsage` we can see that `Box<T>` element is mapped as a nullable pointer to any type `@property id _Nullable elemet;`. For this reason we can do `intBox.elemet = "World"` without compilation errors. 
 
-##### testGenericsUsage :tada:
+**testGenericsUsage** :tada:
 
-Here, the `AnimalBox<T : Animal>` element is mapped as `@property id<KotlinLibraryAnimal> elemet`. So, finally, are forbidden operations like `animalBox.elemet = 2` 
+Here, the `AnimalBox<T : Animal>` element is mapped as `@property id<KotlinLibraryAnimal> elemet`. So, finally, operations like `animalBox.elemet = 2`  are forbidden.
 
-##### testGenericsMapUsage :thinking:
+**testGenericsMapUsage** :thinking:
 
-`mapIntegersToStrings` in kotlin is a `MutableMap<Int, String>` and the objective-c generate code is `@property (class, readonly) KotlinLibraryMutableDictionary<NSNumber *, NSString *> *mapIntegersToStrings`. Reading `<NSNumber *, NSString *>`  I personally thought that it was not possible to do neither  `KotlinLibrary.mapIntegersToStrings[2] = 2` nor `mapIntegersToStrings["three"] = "three"`. Instead, no errors in compilation and tests pass. 
+`mapIntegersToStrings` in kotlin is a `MutableMap<Int, String>` and the objective-c generate code is `@property (class, readonly) KotlinLibraryMutableDictionary<NSNumber *, NSString *> *mapIntegersToStrings`. Reading `<NSNumber *, NSString *>`  I personally thought that it was not possible to do neither  `KotlinLibrary.mapIntegersToStrings[2] = 2` nor `mapIntegersToStrings["three"] = "three"`. Instead, no compilation errors and no failing tests. 
