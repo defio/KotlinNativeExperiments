@@ -11,10 +11,12 @@ This is the things that I wanna explore:
 - [x] Objects
 - [x] Nullability
 - [x] Companion objects
-- [ ] Generics
+- [x] Generics
 - [x] Higher-Order Functions and Lambdas
 - [x] DSL
+- [ ] Inheritance
 - [ ] Unit tests in the common module
+- [ ] Import pure kotlin library in the common module
 - [ ] Distribution as library
    - [ ] maven for the (android + common) as android library
    - [ ] cocoapods for the (iOS + common) as framework
@@ -47,6 +49,12 @@ This is the things that I wanna explore:
     - [DSL](#dsl)
             - [Android](#android)
             - [iOS](#ios)
+    - [Generics](#generics)
+            - [Android](#android)
+            - [iOS](#ios)
+                - [testGenericsBasicUsage :pensive:](#testgenericsbasicusage-pensive)
+                - [testGenericsUsage :tada:](#testgenericsusage-tada)
+                - [testGenericsMapUsage :thinking:](#testgenericsmapusage-thinking)
 
 <!-- /TOC -->
 
@@ -536,3 +544,121 @@ func testDslUsage() {
     XCTAssert(conf.port.isSecure == false)
 }
 ```
+
+## Generics
+
+Common code:
+
+```kotlin
+data class Box<T>(var elemet: T)
+
+data class AnimalBox<T : Animal>(var elemet: T)
+
+val mapIntegersToStrings: MutableMap<Int, String> = mutableMapOf()
+
+interface Animal {
+    fun speak(): String
+}
+
+class Dog : Animal {
+    override fun speak() = "woof"
+}
+
+class Cat : Animal {
+    override fun speak() = "meow"
+}
+```
+
+`Box` is a generic container, `AnimalBox` is a container that allow only subclasses of `Animal` as element.
+
+`mapIntegersToStrings` is a top level property, map with `int` key and `string` values
+
+#### Android
+
+Nothing to explain, all straightforward
+
+```kotlin
+@Test
+fun genericsBasicUsage() {
+    val intBox = Box(8)
+    val stringBox = Box("Hi")
+
+    assertEquals(8, intBox.elemet)
+    assertEquals("Hi", stringBox.elemet)
+
+    // intBox.elemet = "World" <--- compilation error
+}
+
+@Test
+fun genericsUsage() {
+    val animalBox: AnimalBox<Animal> = AnimalBox(Do())
+    assertEquals("woof", animalBox.elemet.speak())
+
+    animalBox.elemet = Cat()
+    assertEquals("meow", animalBox.elemet.speak())
+
+    // animalBox.elemet = 2 <--- compilation error
+}
+
+@Test
+fun genericsMapUsage() {
+    mapIntegersToStrings[1] = "one"
+    mapIntegersToStrings[2] = "two"
+
+    // mapIntegersToStrings[3] = 3 <--- compilation error
+    // mapIntegersToStrings["three"] = "three" <---compilation error
+}
+```
+
+#### iOS
+
+ >Apple introduces Generics in Objective-C since 2015. The main goal is to enable Swift Generics to convert to Objective-C syntax without extra overhead (as it is called as “lightweight generics”). 
+>
+> -- from [Generics in Objective-C](https://medium.com/ios-os-x-development/generics-in-objective-c-8f54c9cfbce7)
+
+```swift
+
+func testGenericsBasicUsage() { //1
+   let intBox = KotlinLibraryBox(elemet: 8)
+   let stringBox = KotlinLibraryBox(elemet: "Hi")
+        
+    XCTAssert(intBox.elemet as! Int == 8)
+    XCTAssert(stringBox.elemet as! String == "Hi")
+        
+    intBox.elemet = "World" //<--- NO compilation error!!
+    XCTAssert(intBox.elemet as! String == "World")
+}
+    
+func testGenericsUsage() {
+    let animalBox = KotlinLibraryAnimalBox(elemet: KotlinLibraryDog())
+    XCTAssert(animalBox.elemet.speak() == "woof")
+    animalBox.elemet = KotlinLibraryCat()
+    XCTAssert(animalBox.elemet.speak() == "meow")
+ 
+    //animalBox.elemet = 2 // <--- compilation error
+}
+    
+func testGenericsMapUsage() {
+    KotlinLibrary.mapIntegersToStrings[0] = "zero"
+    KotlinLibrary.mapIntegersToStrings[1] = "one"
+    KotlinLibrary.mapIntegersToStrings[2] = 2
+    KotlinLibrary.mapIntegersToStrings["three"] = "three"
+        
+    XCTAssert("zero" == KotlinLibrary.mapIntegersToStrings[0] as! String)
+    XCTAssert("one" == KotlinLibrary.mapIntegersToStrings[1] as! String)
+    XCTAssert(2 == KotlinLibrary.mapIntegersToStrings[2] as! Int)
+    XCTAssert("three" == KotlinLibrary.mapIntegersToStrings["three"] as! String)
+}
+```
+
+##### testGenericsBasicUsage :pensive:
+
+Into `testGenericsBasicUsage` we can see that `Box<T>` element is mapped as a nullable pointer to any type `@property id _Nullable elemet;`. For this reason we can do `intBox.elemet = "World"` without compilation erros. 
+
+##### testGenericsUsage :tada:
+
+Here, the `AnimalBox<T : Animal>` element is mapped as `@property id<KotlinLibraryAnimal> elemet`. So, finally, are forbidden operations like `animalBox.elemet = 2` 
+
+##### testGenericsMapUsage :thinking:
+
+`mapIntegersToStrings` in kotlin is a `MutableMap<Int, String>` and the objective-c generate code is `@property (class, readonly) KotlinLibraryMutableDictionary<NSNumber *, NSString *> *mapIntegersToStrings`. Reading `<NSNumber *, NSString *>`  I personally thought that it was not possible to do neither  `KotlinLibrary.mapIntegersToStrings[2] = 2` nor `mapIntegersToStrings["three"] = "three"`. Instead, no errors in compilation and tests pass. 

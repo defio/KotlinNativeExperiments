@@ -24,6 +24,7 @@
 		DBE77D0A20EBC411007B7048 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77D0120EBC40F007B7048 /* Object.swift */; };
 		DBE77D0B20EBC411007B7048 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBE77D0220EBC410007B7048 /* Info.plist */; };
 		DBE77D0C20EBC411007B7048 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77D0320EBC410007B7048 /* Enum.swift */; };
+		DBE77D0F20EBCA33007B7048 /* Generics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77D0E20EBCA33007B7048 /* Generics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		DBE77D0120EBC40F007B7048 /* Object.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
 		DBE77D0220EBC410007B7048 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBE77D0320EBC410007B7048 /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		DBE77D0E20EBCA33007B7048 /* Generics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 				DBE77CFC20EBC40D007B7048 /* MultiPlatform.swift */,
 				DBE77D0120EBC40F007B7048 /* Object.swift */,
 				DBE77CFF20EBC40F007B7048 /* SealedClass.swift */,
+				DBE77D0E20EBCA33007B7048 /* Generics.swift */,
 			);
 			path = iosAppTests;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBE77D0620EBC411007B7048 /* CompanionObject.swift in Sources */,
+				DBE77D0F20EBCA33007B7048 /* Generics.swift in Sources */,
 				DBE77D0420EBC411007B7048 /* DSL.swift in Sources */,
 				DBE77D0820EBC411007B7048 /* SealedClass.swift in Sources */,
 				DBE77D0A20EBC411007B7048 /* Object.swift in Sources */,
