@@ -21,6 +21,8 @@ These are the things that I wanna explore:
    - [ ] maven for the (android + common) as android library
    - [ ] cocoapods for the (iOS + common) as framework
 
+---
+**Table of contents**
 
 <!-- TOC -->
 
@@ -54,6 +56,8 @@ These are the things that I wanna explore:
             - [iOS](#ios)
 
 <!-- /TOC -->
+
+---
 
 ## Enums
 
