@@ -12,12 +12,40 @@ This is the things that I wanna explore:
 - [x] Nullability
 - [x] Companion objects
 - [ ] Generics
-- [ ] Higher-Order Functions and Lambdas
+- [x] Higher-Order Functions and Lambdas
+- [ ] DSL
 - [ ] Unit tests in the common module
 - [ ] Distribution as library
    - [ ] maven for the (android + common) as android library
    - [ ] cocoapods for the (iOS + common) as framework
 
+
+<!-- TOC -->
+
+- [KotlinNativeExperiments](#kotlinnativeexperiments)
+    - [Enums](#enums)
+            - [Android](#android)
+            - [iOS](#ios)
+    - [Enums with arguments](#enums-with-arguments)
+            - [Android](#android)
+            - [iOS](#ios)
+    - [Sealed classes](#sealed-classes)
+            - [Android](#android)
+            - [iOS](#ios)
+    - [Objects](#objects)
+            - [Android](#android)
+            - [iOS](#ios)
+    - [Nullability](#nullability)
+            - [Android](#android)
+            - [iOS](#ios)
+    - [Companion Objects](#companion-objects)
+            - [Android](#android)
+            - [iOS](#ios)
+    - [Higher-Order Functions and Lambdas](#higher-order-functions-and-lambdas)
+            - [Android](#android)
+            - [iOS](#ios)
+
+<!-- /TOC -->
 
 ## Enums
 
@@ -40,7 +68,9 @@ fun usageOfSimpleEnum() {
     }
 }
 ```
+
 #### iOS
+
 Into the ios module I can access to the enum cases, but I don't know how iterate or get the enum size.
 So we can write a test that looks like
 
@@ -55,14 +85,17 @@ func testUsageOfSimpleEnum() {
 ## Enums with arguments
 
 Enum definition
+
 ```kotlin
 enum class EnumWithValue(val associatedValue: Int) {
     ONE(1),
     TWO(2)
 }
 ```
+
 #### Android
 As in the previous section, even with the enums with argument, we can do everything we expect with an enum. So the test can be:
+
 ```kotlin
 @Test
 fun usageOfEnumWithValue() {
@@ -72,8 +105,11 @@ fun usageOfEnumWithValue() {
     }
 }
 ```
+
 #### iOS
+
 As above, the same "issues" with the enum are still present even with the enums with values. At least we can access the value of the variable:
+
 ```swift
 func testUsageOfEnumWithValue() {
     XCTAssert(KotlinLibraryEnumWithValue.one.associatedValue == 1)
@@ -84,6 +120,7 @@ func testUsageOfEnumWithValue() {
 ## Sealed classes
 
 sealed class definition
+
 ```kotlin
 sealed class SealedClassExample {
     class Success(val successMessage: String) : SealedClassExample()
@@ -92,7 +129,9 @@ sealed class SealedClassExample {
 ```
 
 #### Android
+
 As usual into the android module we can do everything we expect with a sealed class. So the test can be:
+
 ```kotlin
 @Test
 fun usageOfSealedClass() {
@@ -119,8 +158,10 @@ private fun assertError(sealed: SealedClassExample) {
 ```
 
 #### iOS
-As far as I know swift and objective-c have no concept of sealed classes. Therefore I do not think it is possible to have something similar to the `when` of kotlin. 
+
+As far as I know swift and objective-c have no concept of sealed classes. Therefore I do not think it is possible to have something similar to the `when` of kotlin.
 The tests we can have are like:
+
 ```swift
 func testSealedClassUsage() {
     let successMessage = "I'm the winner"
@@ -142,6 +183,7 @@ private func assertErrorInstance(selead : KotlinLibrarySealedClassExample){
 ## Objects
 
 Object definition
+
 ```kotlin
 object KotlinObject {
     val INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY = null
@@ -156,6 +198,7 @@ object KotlinObject {
 ```
 
 #### Android
+
 As usual, no surprises
 
 ```kotlin
@@ -164,7 +207,9 @@ fun usageOfKotlinObject() {
     assertTrue(KotlinObject === KotlinObject)
 }
 ```
+
 #### iOS
+
 Well, even here in the ios module the kotlin object is a singleton :tada:
 `KotlinLibraryKotlinObject()` give us always the same instance
 
@@ -179,6 +224,7 @@ func testKotlinObjectUsage() {
 Reusing the object defined in the section above
 
 #### Android
+
 Once again, no surprises
 
 ```kotlin
@@ -209,7 +255,9 @@ private fun playWithNullableStringProperty() {
     assertTrue(KotlinObject.internalStateNullableString == "Now I'm not null")
 }
 ```
+
 #### iOS
+
 There's something weird happening
 
 ```swift
@@ -242,11 +290,12 @@ private func playWithNullableStringProperty(){
 
 1. the kotlin val defined as `const val INITIAL_VALUE_FOR_INT_PROPERTY = 0` is mapped in `initial_VALUE_FOR_INT_PROPERTY` with "initial" lowercase
 2. the kotlin val defined as `val INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY = null` has `Nothing?` as type [(doc as reference :grimacing:)](https://kotlinlang.org/docs/reference/exceptions.html#the-nothing-type).
-Xcode tell us that the kotlin val was mapped into a `var initial_VALUE_FOR_NULLABLE_STRING_PROPERTY: KotlinLibraryStdlibNothing? ` so, a cast to `String?` seems to be inevitable
+Xcode tell us that the kotlin val was mapped into a `var initial_VALUE_FOR_NULLABLE_STRING_PROPERTY: KotlinLibraryStdlibNothing?` so, a cast to `String?` seems to be inevitable
 
 ## Companion Objects
 
 Companion object definition
+
 ```kotlin
 class Container(val state: String) {
 
@@ -263,6 +312,7 @@ class Container(val state: String) {
 ```
 
 #### Android
+
 As usual, no surprises
 
 ```kotlin
@@ -280,7 +330,9 @@ fun usageOfCompanionObject() {
     assertEquals("Hello second", secondContainer.getDecoratedState())
 }
 ```
+
 #### iOS
+
 As we could see into the objects section, even the swift usage of a companion object is straightforward
 
 ```swift
@@ -295,5 +347,111 @@ func testCompanionObjectUsage() {
     
     XCTAssert(firstContainer.getDecoratedState() == "Hello first")
     XCTAssert(secondContainer.getDecoratedState() == "Hello second")
+}
+```
+
+## Higher-Order Functions and Lambdas
+
+```kotlin
+fun topLevelFunction(): String {
+    return "I am a top level"
+}
+
+fun Int.extensionFuction(): Int {
+    return this * 2
+}
+
+fun higherOrderFunctionWithParameter(a: Int, b: Int, f: (Int, Int) -> Int): Int {
+    return f(a, b)
+}
+
+fun higherOrderFunctionWithReturn(functionType: FunctionType): (Int, Int) -> Int {
+    return when (functionType) {
+        FunctionType.SUM -> { a, b -> a + b }
+        FunctionType.MULTIPLY -> { a, b -> a * b }
+    }
+}
+
+fun higherOrderFunctionBoth(a: Double, b: Double, f: (Double, Double) -> Double): Double {
+    return f(a, b)
+}
+
+fun lambdaWithReceiver(arg: Int, func: Int.() -> Int): Int {
+    return func(arg)
+}
+
+enum class FunctionType {
+    SUM, MULTIPLY
+}
+```
+
+#### Android
+
+As usual, no surprises. It is still useful to report the tests for those who do not usually develop in kotlin.
+
+```kotlin
+@Test
+fun topLevelFunctionUsage() {
+    assertEquals("I am a top level", topLevelFunction())
+}
+
+@Test
+fun extensionFunctionUsage() {
+    assertEquals(4, 2.extensionFuction())
+}
+
+@Test
+fun higherOrderFunctionWithParameterUsage() {
+    assertEquals(5, higherOrderFunctionWithParameter(2, 3) { a, b -> a + b })
+}
+
+@Test
+fun higherOrderFunctionWithReturnUsage() {
+    assertEquals(5, higherOrderFunctionWithReturn(FunctionType.SUM)(2, 3))
+
+    val higherOrderFunctionWithReturn = higherOrderFunctionWithReturn(FunctionType.MULTIPLY)
+    assertEquals(6, higherOrderFunctionWithReturn(2, 3))
+}
+
+@Test
+fun higherOrderFunctionBothUsage() {
+    assertEquals(25, higherOrderFunctionBoth(2.0, 3.0) { a, b -> (a + b).pow(2) }.toInt())
+}
+```
+
+#### iOS
+
+Kotlin **top level functions** are accessible directly from `KotlinLibrary`.
+
+Also the **extension function** are accessible via `KotlinLibrary`, as we could expect, since kotlin generates objective-c code, extensions can not be invoked directly on the type that extend.
+
+The higher order functions seems to be mapped as function pointers, for this reason the parameters defined as `double` in kotlin are now `NSNumber`
+
+```swift
+func testTopLevelFunctionUsage() {
+    XCTAssert("I am a top level" == KotlinLibrary.topLevelFunction())
+}
+
+func testExtensionFunctionUsage() {
+    XCTAssert(4 == KotlinLibrary.extensionFuction(2))
+}
+
+func testHigherOrderFunctionWithParameterUsage() {
+    XCTAssert(5 == KotlinLibrary.higherOrderFunctionBoth(a: 2, b: 3, f: {
+        NSNumber(value: ($0.doubleValue + $1.doubleValue))
+    }))
+}
+
+func testHigherOrderFunctionWithReturnUsage() {
+    XCTAssert(5 == KotlinLibrary.higherOrderFunctionWithReturn(functionType: KotlinLibraryFunctionType.sum)(2, 3))
+
+    let higherOrderFunctionWithReturn = KotlinLibrary.higherOrderFunctionWithReturn(functionType: KotlinLibraryFunctionType.multiply)
+    XCTAssert(6 == higherOrderFunctionWithReturn(2, 3))
+}
+
+func testHigherOrderFunctionBothUsage() {
+    XCTAssert(25 == KotlinLibrary.higherOrderFunctionBoth(a: 2, b: 3, f: {
+        NSNumber(value: pow(($0.doubleValue + $1.doubleValue),2))
+    }))
 }
 ```

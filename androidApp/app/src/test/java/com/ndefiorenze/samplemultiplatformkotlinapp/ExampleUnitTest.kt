@@ -2,14 +2,23 @@ package com.ndefiorenze.samplemultiplatformkotlinapp
 
 import com.ndefiorenze.Container
 import com.ndefiorenze.EnumWithValue
+import com.ndefiorenze.FunctionType
 import com.ndefiorenze.Greeting
 import com.ndefiorenze.KotlinObject
 import com.ndefiorenze.SealedClassExample
 import com.ndefiorenze.SimpleEnum
+import com.ndefiorenze.configuration
+import com.ndefiorenze.extensionFuction
+import com.ndefiorenze.higherOrderFunctionBoth
+import com.ndefiorenze.higherOrderFunctionWithParameter
+import com.ndefiorenze.higherOrderFunctionWithReturn
+import com.ndefiorenze.lambdaWithReceiver
+import com.ndefiorenze.topLevelFunction
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlin.math.pow
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -107,5 +116,50 @@ class ExampleUnitTest {
         assertEquals("Hello first", firstContainer.getDecoratedState())
         assertEquals("Hello second", secondContainer.getDecoratedState())
     }
+
+    @Test
+    fun topLevelFunctionUsage() {
+        assertEquals("I am a top level", topLevelFunction())
+    }
+
+    @Test
+    fun extensionFunctionUsage() {
+        assertEquals(4, 2.extensionFuction())
+    }
+
+    @Test
+    fun higherOrderFunctionWithParameterUsage() {
+        assertEquals(5, higherOrderFunctionWithParameter(2, 3) { a, b -> a + b })
+    }
+
+    @Test
+    fun higherOrderFunctionWithReturnUsage() {
+        assertEquals(5, higherOrderFunctionWithReturn(FunctionType.SUM)(2, 3))
+
+        val higherOrderFunctionWithReturn = higherOrderFunctionWithReturn(FunctionType.MULTIPLY)
+        assertEquals(6, higherOrderFunctionWithReturn(2, 3))
+    }
+
+    @Test
+    fun higherOrderFunctionBothUsage() {
+        assertEquals(25, higherOrderFunctionBoth(2.0, 3.0) { a, b -> (a + b).pow(2) }.toInt())
+    }
+
+    @Test
+    fun dslUsage() {
+        val conf = configuration {
+            host = "127.0.0.1"
+            port {
+                value = 8080
+                isSecure = false
+            }
+        }
+
+        assertEquals("127.0.0.1", conf.host)
+        assertEquals(8080, conf.port.value)
+        assertEquals(false, conf.port.isSecure)
+    }
+
+
 
 }

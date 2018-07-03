@@ -48,6 +48,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/kotlin" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -57,13 +58,5 @@
     <orderEntry type="library" exported="" name="annotations-13.0" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="kotlin-stdlib-common-1.2.41" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="kotlin-stdlib-common-1.2.41" level="project" />
-    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
-    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
-    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
-    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
-    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
-    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
-    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
-    <orderEntry type="library" exported="" name="android.android-1.0" level="project" />
   </component>
 </module>
