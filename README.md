@@ -13,7 +13,7 @@ This is the things that I wanna explore:
 - [x] Companion objects
 - [ ] Generics
 - [x] Higher-Order Functions and Lambdas
-- [ ] DSL
+- [x] DSL
 - [ ] Unit tests in the common module
 - [ ] Distribution as library
    - [ ] maven for the (android + common) as android library
@@ -42,6 +42,9 @@ This is the things that I wanna explore:
             - [Android](#android)
             - [iOS](#ios)
     - [Higher-Order Functions and Lambdas](#higher-order-functions-and-lambdas)
+            - [Android](#android)
+            - [iOS](#ios)
+    - [DSL](#dsl)
             - [Android](#android)
             - [iOS](#ios)
 
@@ -455,3 +458,61 @@ func testHigherOrderFunctionBothUsage() {
     }))
 }
 ```
+
+## DSL
+
+From the [official documentation](https://kotlinlang.org/docs/reference/type-safe-builders.html#type-safe-builders)
+
+>By using well-named functions as builders in combination with function literals 
+>with receiver it is possible to create type-safe, statically-typed builders in >Kotlin.  
+>
+>Type-safe builders allow for creating Kotlin-based domain-specific languages (DSLs) suitable for building complex hierarchical data structures in a semi-declarative way. Some of the example use cases for the builders are:  
+>
+> - Generating markup with Kotlin code, such as HTML or XML;
+> - Programmatically laying out UI components: Anko
+> - Configuring routes for a web server: Ktor.
+
+Here everything we need for define a micro DSL:
+
+```kotlin
+data class Port(var value: Int = 0, var isSecure: Boolean = false) {
+    operator fun invoke(init: Port.() -> Unit) {
+        init()
+    }
+}
+
+data class Configuration(var host: String = "", var port: Port = Port())
+
+fun configuration(init: Configuration.() -> Unit): Configuration {
+    val configuration = Configuration()
+    configuration.init()
+    return configuration
+}
+```
+
+- Two data class: `Port` and `Configuration`
+- An operator overload: `operator fun invoke(init: Port.() -> Unit)`
+- A lambda with receiver `fun configuration(init: Configuration.() -> Unit): Configuration`
+
+#### Android
+
+With the code above we can write a test like:
+
+```kotlin
+@Test
+fun dslUsage() {
+    val conf = configuration {
+        host = "127.0.0.1"
+        port {
+            value = 8080
+            isSecure = false
+        }
+    }
+    
+    assertEquals("127.0.0.1", conf.host)
+    assertEquals(8080, conf.port.value)
+    assertEquals(false, conf.port.isSecure)
+}
+```
+
+#### iOS
