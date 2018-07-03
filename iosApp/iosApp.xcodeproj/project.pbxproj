@@ -12,11 +12,18 @@
 		DB65A8E720D9A407003014BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB65A8E520D9A407003014BF /* Main.storyboard */; };
 		DB65A8E920D9A408003014BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB65A8E820D9A408003014BF /* Assets.xcassets */; };
 		DB65A8EC20D9A408003014BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB65A8EA20D9A408003014BF /* LaunchScreen.storyboard */; };
-		DB65A8F720D9A408003014BF /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB65A8F620D9A408003014BF /* iosAppTests.swift */; };
 		DB65A90F20D9A4E9003014BF /* KotlinLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB65A90620D9A4E8003014BF /* KotlinLibrary.framework */; };
 		DB65A91620D9A4E9003014BF /* KotlinLibraryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB65A91520D9A4E9003014BF /* KotlinLibraryTests.m */; };
 		DB65A91B20D9A4E9003014BF /* KotlinLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB65A90620D9A4E8003014BF /* KotlinLibrary.framework */; };
 		DB65A91C20D9A4E9003014BF /* KotlinLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DB65A90620D9A4E8003014BF /* KotlinLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DBE77D0420EBC411007B7048 /* DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77CFB20EBC40D007B7048 /* DSL.swift */; };
+		DBE77D0520EBC411007B7048 /* MultiPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77CFC20EBC40D007B7048 /* MultiPlatform.swift */; };
+		DBE77D0620EBC411007B7048 /* CompanionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77CFD20EBC40E007B7048 /* CompanionObject.swift */; };
+		DBE77D0720EBC411007B7048 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77CFE20EBC40E007B7048 /* Functions.swift */; };
+		DBE77D0820EBC411007B7048 /* SealedClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77CFF20EBC40F007B7048 /* SealedClass.swift */; };
+		DBE77D0A20EBC411007B7048 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77D0120EBC40F007B7048 /* Object.swift */; };
+		DBE77D0B20EBC411007B7048 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBE77D0220EBC410007B7048 /* Info.plist */; };
+		DBE77D0C20EBC411007B7048 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77D0320EBC410007B7048 /* Enum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,8 +80,6 @@
 		DB65A8EB20D9A408003014BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB65A8ED20D9A408003014BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB65A8F220D9A408003014BF /* iosAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DB65A8F620D9A408003014BF /* iosAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppTests.swift; sourceTree = "<group>"; };
-		DB65A8F820D9A408003014BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB65A90620D9A4E8003014BF /* KotlinLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KotlinLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB65A90820D9A4E8003014BF /* KotlinLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KotlinLibrary.h; sourceTree = "<group>"; };
 		DB65A90920D9A4E8003014BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -83,6 +88,14 @@
 		DB65A91720D9A4E9003014BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB65A92B20D9A7CC003014BF /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ios; path = ../kotlinLibrary/ios; sourceTree = "<group>"; };
 		DB65A92C20D9A7D9003014BF /* common */ = {isa = PBXFileReference; lastKnownFileType = folder; name = common; path = ../kotlinLibrary/common; sourceTree = "<group>"; };
+		DBE77CFB20EBC40D007B7048 /* DSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSL.swift; sourceTree = "<group>"; };
+		DBE77CFC20EBC40D007B7048 /* MultiPlatform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPlatform.swift; sourceTree = "<group>"; };
+		DBE77CFD20EBC40E007B7048 /* CompanionObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanionObject.swift; sourceTree = "<group>"; };
+		DBE77CFE20EBC40E007B7048 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		DBE77CFF20EBC40F007B7048 /* SealedClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SealedClass.swift; sourceTree = "<group>"; };
+		DBE77D0120EBC40F007B7048 /* Object.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
+		DBE77D0220EBC410007B7048 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DBE77D0320EBC410007B7048 /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,8 +165,14 @@
 		DB65A8F520D9A408003014BF /* iosAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				DB65A8F620D9A408003014BF /* iosAppTests.swift */,
-				DB65A8F820D9A408003014BF /* Info.plist */,
+				DBE77D0220EBC410007B7048 /* Info.plist */,
+				DBE77CFD20EBC40E007B7048 /* CompanionObject.swift */,
+				DBE77CFB20EBC40D007B7048 /* DSL.swift */,
+				DBE77D0320EBC410007B7048 /* Enum.swift */,
+				DBE77CFE20EBC40E007B7048 /* Functions.swift */,
+				DBE77CFC20EBC40D007B7048 /* MultiPlatform.swift */,
+				DBE77D0120EBC40F007B7048 /* Object.swift */,
+				DBE77CFF20EBC40F007B7048 /* SealedClass.swift */,
 			);
 			path = iosAppTests;
 			sourceTree = "<group>";
@@ -312,6 +331,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBE77D0B20EBC411007B7048 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,7 +374,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB65A8F720D9A408003014BF /* iosAppTests.swift in Sources */,
+				DBE77D0620EBC411007B7048 /* CompanionObject.swift in Sources */,
+				DBE77D0420EBC411007B7048 /* DSL.swift in Sources */,
+				DBE77D0820EBC411007B7048 /* SealedClass.swift in Sources */,
+				DBE77D0A20EBC411007B7048 /* Object.swift in Sources */,
+				DBE77D0520EBC411007B7048 /* MultiPlatform.swift in Sources */,
+				DBE77D0C20EBC411007B7048 /* Enum.swift in Sources */,
+				DBE77D0720EBC411007B7048 /* Functions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
