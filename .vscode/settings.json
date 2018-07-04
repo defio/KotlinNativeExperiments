@@ -1,0 +1,5 @@
+{
+    "markdown.extension.toc.levels": "1..2",
+    "files.autoSave": "afterDelay",
+    "markdown.extension.toc.githubCompatibility": true
+}

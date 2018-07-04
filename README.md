@@ -24,38 +24,16 @@ These are the things that I wanna explore:
 ---
 **Table of contents**
 
-<!-- TOC -->
-
 - [KotlinNativeExperiments](#kotlinnativeexperiments)
     - [Enums](#enums)
-            - [Android](#android)
-            - [iOS](#ios)
     - [Enums with arguments](#enums-with-arguments)
-            - [Android](#android)
-            - [iOS](#ios)
     - [Sealed classes](#sealed-classes)
-            - [Android](#android)
-            - [iOS](#ios)
     - [Objects](#objects)
-            - [Android](#android)
-            - [iOS](#ios)
     - [Nullability](#nullability)
-            - [Android](#android)
-            - [iOS](#ios)
     - [Companion Objects](#companion-objects)
-            - [Android](#android)
-            - [iOS](#ios)
     - [Higher-Order Functions and Lambdas](#higher-order-functions-and-lambdas)
-            - [Android](#android)
-            - [iOS](#ios)
     - [DSL](#dsl)
-            - [Android](#android)
-            - [iOS](#ios)
     - [Generics](#generics)
-            - [Android](#android)
-            - [iOS](#ios)
-
-<!-- /TOC -->
 
 ---
 
