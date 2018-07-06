@@ -46,5 +46,7 @@
     <orderEntry type="jdk" jdkName="Kotlin SDK" jdkType="KotlinSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="kotlin-stdlib-common-1.2.41" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="kotlin-test-common-1.2.41" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="kotlin-test-annotations-common-1.2.41" level="project" />
   </component>
 </module>

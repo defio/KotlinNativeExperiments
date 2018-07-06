@@ -8,5 +8,4 @@ object KotlinObject {
     var internalStateNullableString: String? = INITIAL_VALUE_FOR_NULLABLE_STRING_PROPERTY
     var internalStateInt: Int = INITIAL_VALUE_FOR_INT_PROPERTY
     var internalStateNullableAny: Any? = INITIAL_VALUE_FOR_NULLABLE_ANY_PROPERTY
-
 }

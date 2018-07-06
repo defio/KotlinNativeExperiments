@@ -15,7 +15,7 @@ These are the things that I wanna explore:
 - [x] Higher-Order Functions and Lambdas
 - [x] DSL
 - [x] Inheritance
-- [ ] Unit tests in the common module
+- [x] Unit tests in the common module
 - [ ] Import pure kotlin library in the common module
 - [ ] Distribution as library
    - [ ] maven for the (android + common) as android library
@@ -35,6 +35,7 @@ These are the things that I wanna explore:
     - [DSL](#dsl)
     - [Generics](#generics)
     - [Inheritance](#inheritance)
+    - [Unit tests in the common module](#unit-tests-in-the-common-module)
 
 ---
 
@@ -947,3 +948,107 @@ I our case the `abstract fun transformValue()` is used into the concrete functio
 **testInheritanceForInterface**
 
 Finally a straightforward case! :tada::tada:
+
+## Unit tests in the common module
+
+To support common modules unit testing, Kotlin team made [`kotlin.test`](https://kotlinlang.org/api/latest/kotlin.test/index.html) library. To use it, we need to add the following dependencies into ours common module `build.gradle` file
+
+```groovy
+testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version" 
+testCompile "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlin_version"
+```
+
+Once added the dependencies we can write test in the common module:
+
+```kotlin
+class TestExample {
+
+    @Test
+    fun `square should respect the perim and area formulas`() {
+        val square = Square(2f)
+
+        assertEquals(2f, square.side)
+        assertEquals(8f, square.perim())
+        assertEquals(4f, square.area())
+        assertEquals("Hi I'm a square with side = 2.0", square.interfaceVariable)
+        assertEquals(123, square.interfaceValue)
+    }
+
+    @Test
+    fun `Greeting()_greeting() should start with 'Hello, '`() {
+        assertTrue {
+            Greeting().greeting().startsWith("Hello, ")
+        }
+    }
+
+}
+```
+
+To run the tests we have to run them on platform modules
+
+#### Android 
+
+In order to run test in the JVM module we need the following dependencies into the `build.gradle` of the android module
+
+```groovy
+testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+```
+
+Now We can run tests on JVM using 
+
+```groovy
+./gradlew :kotlinLibrary:android:test
+```
+
+An HTML report is generated in `android/build/reports/tests/test/index.html`
+
+
+#### iOS
+
+We have already done the setup to run the test in the iOS enviroment writing into the `build.gradle` of the ios module
+
+```groovy
+konanArtifacts {
+    
+    //... STUFF ...
+
+    program('NativeTest') {
+        srcDir 'src/test/kotlin'
+        commonSourceSet 'test'
+        libraries {
+            artifact 'NativeLib'
+        }
+        extraOpts '-tr'
+    }
+}
+
+task test(dependsOn: 'compileKonanNativeTestIos_x64', type: Exec) {
+    def textExecutable = tasks["compileKonanNativeTestIos_x64"].artifactPath
+    commandLine("xcrun", "simctl", "spawn", "iPhone 8", textExecutable)
+}
+```
+
+so, similarly to Android we can run tests on iOS using 
+
+```groovy
+./gradlew :kotlinLibrary:ios:test
+```
+
+And the output is
+
+```
+> Task :kotlinLibrary:ios:test
+[==========] Running 2 tests from 1 test cases.
+[----------] Global test environment set-up.
+[----------] 2 tests from com.ndefiorenze.TestExample
+[ RUN      ] com.ndefiorenze.TestExample.square should respect the perim and area formulas
+[       OK ] com.ndefiorenze.TestExample.square should respect the perim and area formulas (2 ms)
+[ RUN      ] com.ndefiorenze.TestExample.Greeting()_greeting() should start with 'Hello, '
+[       OK ] com.ndefiorenze.TestExample.Greeting()_greeting() should start with 'Hello, ' (0 ms)
+[----------] 2 tests from com.ndefiorenze.TestExample (3 ms total)
+
+[----------] Global test environment tear-down
+[==========] 2 tests from 1 test cases ran. (3 ms total)
+[  PASSED  ] 2 tests.
+```
