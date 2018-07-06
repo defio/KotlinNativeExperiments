@@ -894,7 +894,7 @@ Objective-C:
 
 
 
-**testInheritanceForFinalClass** :exploding_head:
+**testInheritanceForFinalClass** :scream:
 
 From an objective-c file, inherit from a kotlin final class is forbidden :+1:  
 From a swift file, instead, the inheritation from a kotlin final class is allowed :frowning:
