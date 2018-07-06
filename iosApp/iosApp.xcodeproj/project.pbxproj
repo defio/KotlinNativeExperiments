@@ -16,6 +16,8 @@
 		DB65A91620D9A4E9003014BF /* KotlinLibraryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB65A91520D9A4E9003014BF /* KotlinLibraryTests.m */; };
 		DB65A91B20D9A4E9003014BF /* KotlinLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB65A90620D9A4E8003014BF /* KotlinLibrary.framework */; };
 		DB65A91C20D9A4E9003014BF /* KotlinLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DB65A90620D9A4E8003014BF /* KotlinLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DB9A77E720ED1AAD00F166E7 /* Inheritance.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9A77E620ED1AAD00F166E7 /* Inheritance.m */; };
+		DB9A77E920ED1AC600F166E7 /* Inheritance.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9A77E820ED1AC600F166E7 /* Inheritance.swift */; };
 		DBE77D0420EBC411007B7048 /* DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77CFB20EBC40D007B7048 /* DSL.swift */; };
 		DBE77D0520EBC411007B7048 /* MultiPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77CFC20EBC40D007B7048 /* MultiPlatform.swift */; };
 		DBE77D0620EBC411007B7048 /* CompanionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE77CFD20EBC40E007B7048 /* CompanionObject.swift */; };
@@ -89,6 +91,9 @@
 		DB65A91720D9A4E9003014BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB65A92B20D9A7CC003014BF /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ios; path = ../kotlinLibrary/ios; sourceTree = "<group>"; };
 		DB65A92C20D9A7D9003014BF /* common */ = {isa = PBXFileReference; lastKnownFileType = folder; name = common; path = ../kotlinLibrary/common; sourceTree = "<group>"; };
+		DB9A77E520ED1AAD00F166E7 /* iosAppTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosAppTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		DB9A77E620ED1AAD00F166E7 /* Inheritance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Inheritance.m; sourceTree = "<group>"; };
+		DB9A77E820ED1AC600F166E7 /* Inheritance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inheritance.swift; sourceTree = "<group>"; };
 		DBE77CFB20EBC40D007B7048 /* DSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSL.swift; sourceTree = "<group>"; };
 		DBE77CFC20EBC40D007B7048 /* MultiPlatform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPlatform.swift; sourceTree = "<group>"; };
 		DBE77CFD20EBC40E007B7048 /* CompanionObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanionObject.swift; sourceTree = "<group>"; };
@@ -176,6 +181,9 @@
 				DBE77D0120EBC40F007B7048 /* Object.swift */,
 				DBE77CFF20EBC40F007B7048 /* SealedClass.swift */,
 				DBE77D0E20EBCA33007B7048 /* Generics.swift */,
+				DB9A77E620ED1AAD00F166E7 /* Inheritance.m */,
+				DB9A77E520ED1AAD00F166E7 /* iosAppTests-Bridging-Header.h */,
+				DB9A77E820ED1AC600F166E7 /* Inheritance.swift */,
 			);
 			path = iosAppTests;
 			sourceTree = "<group>";
@@ -287,6 +295,7 @@
 					};
 					DB65A8F120D9A408003014BF = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 0940;
 						TestTargetID = DB65A8DD20D9A407003014BF;
 					};
 					DB65A90520D9A4E8003014BF = {
@@ -379,11 +388,13 @@
 			files = (
 				DBE77D0620EBC411007B7048 /* CompanionObject.swift in Sources */,
 				DBE77D0F20EBCA33007B7048 /* Generics.swift in Sources */,
+				DB9A77E920ED1AC600F166E7 /* Inheritance.swift in Sources */,
 				DBE77D0420EBC411007B7048 /* DSL.swift in Sources */,
 				DBE77D0820EBC411007B7048 /* SealedClass.swift in Sources */,
 				DBE77D0A20EBC411007B7048 /* Object.swift in Sources */,
 				DBE77D0520EBC411007B7048 /* MultiPlatform.swift in Sources */,
 				DBE77D0C20EBC411007B7048 /* Enum.swift in Sources */,
+				DB9A77E720ED1AAD00F166E7 /* Inheritance.m in Sources */,
 				DBE77D0720EBC411007B7048 /* Functions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -594,6 +605,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = iosAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -603,6 +615,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ndefiorenze.iosAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iosAppTests/iosAppTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iosApp.app/iosApp";
@@ -614,6 +628,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = iosAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -623,6 +638,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ndefiorenze.iosAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iosAppTests/iosAppTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iosApp.app/iosApp";

@@ -14,7 +14,7 @@ These are the things that I wanna explore:
 - [x] Generics
 - [x] Higher-Order Functions and Lambdas
 - [x] DSL
-- [ ] Inheritance
+- [x] Inheritance
 - [ ] Unit tests in the common module
 - [ ] Import pure kotlin library in the common module
 - [ ] Distribution as library
@@ -34,6 +34,7 @@ These are the things that I wanna explore:
     - [Higher-Order Functions and Lambdas](#higher-order-functions-and-lambdas)
     - [DSL](#dsl)
     - [Generics](#generics)
+    - [Inheritance](#inheritance)
 
 ---
 
@@ -642,3 +643,307 @@ Here, the `AnimalBox<T : Animal>` element is mapped as `@property id<KotlinLibra
 **testGenericsMapUsage** :thinking:
 
 `mapIntegersToStrings` in kotlin is a `MutableMap<Int, String>` and the objective-c generate code is `@property (class, readonly) KotlinLibraryMutableDictionary<NSNumber *, NSString *> *mapIntegersToStrings`. Reading `<NSNumber *, NSString *>`  I personally thought that it was not possible to do neither  `KotlinLibrary.mapIntegersToStrings[2] = 2` nor `mapIntegersToStrings["three"] = "three"`. Instead, no compilation errors and no failing tests. 
+
+## Inheritance
+
+```kotlin
+class CannotInheritFromMe(val parentValue: Int)
+
+open class YouCanInheritFromMe(val parentValue: Int)
+
+abstract class AbstractClass(val abstractClassValue: Int) {
+
+    abstract fun transformValue(): String
+
+    fun concreteFunction(): Int{
+        return transformValue().length
+    }
+
+}
+
+interface Shape {
+
+    var interfaceVariable: String
+    val interfaceValue: Int
+
+    fun area(): Float
+    fun perim(): Float
+}
+
+class Square(val side: Float) : Shape {
+
+    override var interfaceVariable: String = "Hi I'm a square with side = $side"
+    override val interfaceValue: Int = 123
+
+    override fun area() = side.pow(2)
+
+    override fun perim() = 4 * side
+
+}
+
+```
+
+Here we have:
+- `class CannotInheritFromMe` that, as design, is final
+- `open class YouCanInheritFromMe` that, with the open annotation, allows others to inherit from it
+- `abstract class AbstractClass`  with a default constructor, an abstract function `transformValue(): String` and a concrete function `concreteFunction(): Int`
+- `interface Shape`
+- `Square` that implement `Shape`
+
+#### Android 
+
+
+Once, again, no surprises:
+
+```kotlin
+@Test
+fun inheritanceForFinalClass() {
+    // class Attempt(val parentValue: Int) : CannotInheritFromMe(parentValue) <--- compilation error
+}
+
+@Test
+fun inheritanceForOpenClass() {
+    class Attempt(val childValue: String, parentValue: Int) : YouCanInheritFromMe(parentValue)
+
+    val attempt = Attempt(childValue = "value for Child", parentValue = 1)
+
+    assertEquals("value for Child", attempt.childValue)
+    assertEquals(1, attempt.parentValue)
+}
+
+@Test
+fun inheritanceForAbstractClass() {
+    class Attempt(val childValue: String, parentValue: Int) : AbstractClass(parentValue) {
+        override fun transformValue(): String {
+            return "$childValue : $abstractClassValue"
+        }
+    }
+
+    val attempt = Attempt(childValue = "value for Child", parentValue = 1)
+
+    assertEquals("value for Child", attempt.childValue)
+    assertEquals(1, attempt.abstractClassValue)
+    assertEquals("value for Child : 1", attempt.transformValue())
+    assertEquals(19, attempt.concreteFunction())
+}
+
+@Test
+fun inheritanceForInterface() {
+    class Rect(val width: Float, val height: Float) : Shape {
+        override var interfaceVariable = "Hi I'm a rect with width = $width and height = $height"
+        override val interfaceValue: Int = 456
+
+        override fun area() = width * height
+
+        override fun perim() = 2 * (width + height)
+    }
+
+    val rect = Rect(2f, 3f)
+    val square = Square(2f)
+
+    assertTrue(rect is Shape)
+    assertTrue(square is Shape)
+
+    assertEquals(10f, rect.perim())
+    assertEquals(6f, rect.area())
+    assertEquals("Hi I'm a rect with width = 2.0 and height = 3.0", rect.interfaceVariable)
+    assertEquals(456, rect.interfaceValue)
+
+    assertEquals(2f, square.side)
+    assertEquals(8f, square.perim())
+    assertEquals(4f, square.area())
+    assertEquals("Hi I'm a square with side = 2.0", square.interfaceVariable)
+    assertEquals(123, square.interfaceValue)
+}
+
+```
+
+**inheritanceForFinalClass** 
+
+Inheritance from  a final class is forbidden
+
+**inheritanceForOpenClass** 
+
+Inheritance from an open class is allow. `Attempt` have a constructor with a `val childValue: String` and a `parentValue: Int`; `parentValue` is used to feed the constructor of `YouCanInheritFromMe`
+
+**inheritanceForAbstractClass** 
+
+Inheritance from an abstract class is allow. `Attempt` have a constructor with a `val childValue: String` and a `parentValue: Int`; `parentValue` is used to feed the constructor of `AbstractClass`. In addition to this have also the concrete implementation of `transformValue(): String`, the abstract method of `AbstractClass`.
+
+**inheritanceForInterface**
+
+In the common module we have defined `Shape` as interface, and `Square` as class that implement `Shape`.  
+Into the test case we have `Rect`, an other class tha implement `Shape`.
+
+
+#### iOS 
+
+Once, again, weird things :see_no_evil:
+
+Swift:
+
+```swift
+func testInheritanceForFinalClass(){
+        
+    class Attempt: KotlinLibraryCannotInheritFromMe { //<--- NO compilation error!!
+            
+        override init(parentValue: Int32) {
+            super.init(parentValue: parentValue)
+        }
+    }
+        
+    let attempt = Attempt(parentValue: 24)
+    XCTAssert(attempt.parentValue == 24)
+}
+    
+func testInheritanceForOpenClass(){
+        
+    class Attempt: KotlinLibraryYouCanInheritFromMe {
+            
+        override init(parentValue: Int32) {
+            super.init(parentValue: parentValue)
+        }
+    }
+        
+    let attempt = Attempt(parentValue: 24)
+    XCTAssert(attempt.parentValue == 24)
+}
+    
+    
+func testInheritanceForAbstractClass(){
+        
+    class Attempt: KotlinLibraryAbstractClass {
+        var value : String
+            
+        init(childValue: String, abstractClassValue: Int32) {
+            value = childValue
+            super.init(abstractClassValue: abstractClassValue)
+        }
+            
+        override func transformValue() -> String {
+            return "\(value) : \(abstractClassValue)"
+        }
+            
+    }
+        
+    let attempt = Attempt(childValue: "value for Child", abstractClassValue: 1)
+    XCTAssert(attempt.abstractClassValue == 1)
+    XCTAssert(attempt.value == "value for Child")
+    XCTAssert("value for Child : 1" == attempt.transformValue())
+    XCTAssert(19 == attempt.concreteFunction())
+}
+
+func testInheritanceForInterface(){
+        
+    class Rect : KotlinLibraryShape {
+        let width, height: Float
+            
+        init(width: Float, height: Float) {
+            self.width = width
+            self.height = height
+        }
+            
+        var interfaceValue: Int32{
+            get {
+                return 456
+            }
+        }
+            
+        lazy var interfaceVariable = "Hi I'm a rect with width = \(width) and height = \(height)"
+            
+        func area() -> Float {
+            return width * height
+        }
+            
+        func perim() -> Float {
+            return 2 * (width + height)
+        }
+            
+    }
+        
+    let rect = Rect(width: 2.0, height: 3.0)
+    let square = KotlinLibrarySquare(side:2.0)
+        
+    XCTAssert(rect is KotlinLibraryShape)
+    XCTAssert(square is KotlinLibraryShape)
+        
+    XCTAssert(10.0 == rect.perim())
+    XCTAssert(6.0 == rect.area())
+    XCTAssert("Hi I'm a rect with width = 2.0 and height = 3.0" == rect.interfaceVariable)
+    XCTAssert(456 == rect.interfaceValue, "Failed: rect.interfaceVariable is \(String(describing: rect.interfaceValue))")
+        
+    XCTAssert(2.0 == square.side)
+    XCTAssert(8.0 == square.perim())
+    XCTAssert(4.0 == square.area())
+    XCTAssert("Hi I'm a square with side = 2.0" == square.interfaceVariable)
+    XCTAssert(123 == square.interfaceValue)
+}
+```
+
+Objective-C:
+
+```objective-c
+@import KotlinLibrary;
+
+@interface Attempt: KotlinLibraryCannotInheritFromMe // <--- compilation error : Cannot subclass a class that was declared with the 'objc_subclassing_restricted' attribute 
+@end
+ 
+@implementation Attempt
+@end
+```
+
+
+
+**testInheritanceForFinalClass** :exploding_head:
+
+From an objective-c file, inherit from a kotlin final class is forbidden :+1:  
+From a swift file, instead, the inheritation from a kotlin final class is allowed :frowning:
+
+If we jump into the definition of `KotlinLibraryCannotInheritFromMe` we can see
+
+From `KotlinLibrary.h`:
+
+```objective-c
+__attribute__((objc_subclassing_restricted))
+@interface KotlinLibraryCannotInheritFromMe : KotlinBase
+-(instancetype)initWithParentValue:(int32_t)parentValue NS_SWIFT_NAME(init(parentValue:)) NS_DESIGNATED_INITIALIZER;
+```
+
+From the `KotlinLibrary` import:
+```swift
+open class KotlinLibraryCannotInheritFromMe : KotlinBase {
+
+    public init(parentValue: Int32)
+    
+    open var parentValue: Int32 { get }
+
+}
+```
+
+Seeing the definitions is clear the reason of the two different behaviours. Googling it seems that:
+
+> **Make an Objective-C class final in Swift**
+>
+> It seems this is impossible right now. Objective-C doesn't support final classes so Swift supposes that every Obj-C class is not final.
+>
+> -- from [stackoverflow](https://stackoverflow.com/questions/34419671/make-an-objective-c-class-final-in-swift)
+
+> **Add `objc_subclassing_restricted` attribute**
+>
+> This patch adds an `objc_subclassing_restricted` attribute into clang. This attribute acts similarly to 'final' - Objective-C classes with this attribute can't be subclassed. However, `@interface` declarations that have `objc_subclassing_restricted` but don't have `@implementation` are allowed to inherit other `@interface` declarations with `objc_subclassing_restricted`. This is needed to describe the Swift class hierarchy in clang while making sure that the Objective-C classes can't subclass the Swift classes.
+>
+> -- from [reviews.llvm.org](https://reviews.llvm.org/D25993)
+
+**testInheritanceForOpenClass**
+
+If even the inheritance from a fial class is conceded, the inheritance from an open class can only be allowed  :sweat_smile:
+
+**testInheritanceForAbstractClass**
+
+Ehm, objective-c has no compile-time enforcement that prevents instantiation of an abstract class, so, yes we can inherit from an abstract class, not override any of the abstract methods and have no compiling errors :worried:
+
+I our case the `abstract fun transformValue()` is used into the concrete function so we have wonderful `SIGABRT ERROR` at runtime :tada: :expressionless:
+
+**testInheritanceForInterface**
+
+Finally a straightforward case! :tada::tada:
