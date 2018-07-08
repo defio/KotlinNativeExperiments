@@ -689,7 +689,7 @@ Here we have:
 - `open class YouCanInheritFromMe` that, with the open annotation, allows others to inherit from it
 - `abstract class AbstractClass`  with a default constructor, an abstract function `transformValue(): String` and a concrete function `concreteFunction(): Int`
 - `interface Shape`
-- `Square` that implement `Shape`
+- `Square` that implements `Shape`
 
 #### Android 
 
@@ -765,16 +765,16 @@ Inheritance from  a final class is forbidden
 
 **inheritanceForOpenClass** 
 
-Inheritance from an open class is allow. `Attempt` have a constructor with a `val childValue: String` and a `parentValue: Int`; `parentValue` is used to feed the constructor of `YouCanInheritFromMe`
+Inheritance from an open class is allowed. `Attempt` has a constructor with a `val childValue: String` and a `parentValue: Int`; `parentValue` is used to feed the constructor of `YouCanInheritFromMe`
 
 **inheritanceForAbstractClass** 
 
-Inheritance from an abstract class is allow. `Attempt` have a constructor with a `val childValue: String` and a `parentValue: Int`; `parentValue` is used to feed the constructor of `AbstractClass`. In addition to this have also the concrete implementation of `transformValue(): String`, the abstract method of `AbstractClass`.
+Inheritance from an abstract class is allow. `Attempt` has a constructor with a `val childValue: String` and a `parentValue: Int`; `parentValue` is used to feed the constructor of `AbstractClass`. In addition to this, `Attempt` has also the concrete implementation of `transformValue(): String`, the abstract method of `AbstractClass`.
 
 **inheritanceForInterface**
 
-In the common module we have defined `Shape` as interface, and `Square` as class that implement `Shape`.  
-Into the test case we have `Rect`, an other class tha implement `Shape`.
+In the common module we have defined `Shape` as interface, and `Square` as class that implements `Shape`.  
+Into the test case we have `Rect`, an other class that implements `Shape`.
 
 
 #### iOS 
@@ -921,7 +921,7 @@ open class KotlinLibraryCannotInheritFromMe : KotlinBase {
 }
 ```
 
-Seeing the definitions is clear the reason of the two different behaviours. Googling it seems that:
+Seeing the definitions, it is clear the reason of the two different behaviours. Googling it seems that:
 
 > **Make an Objective-C class final in Swift**
 >
@@ -937,13 +937,13 @@ Seeing the definitions is clear the reason of the two different behaviours. Goog
 
 **testInheritanceForOpenClass**
 
-If even the inheritance from a fial class is conceded, the inheritance from an open class can only be allowed  :sweat_smile:
+If even the inheritance from a final class is conceded, the inheritance from an open class can only be allowed  :sweat_smile:
 
 **testInheritanceForAbstractClass**
 
 Ehm, objective-c has no compile-time enforcement that prevents instantiation of an abstract class, so, yes we can inherit from an abstract class, not override any of the abstract methods and have no compiling errors :worried:
 
-I our case the `abstract fun transformValue()` is used into the concrete function so we have wonderful `SIGABRT ERROR` at runtime :tada: :expressionless:
+In our case the `abstract fun transformValue()` is used into the concrete function so we have wonderful `SIGABRT ERROR` at runtime :tada: :expressionless:
 
 **testInheritanceForInterface**
 
@@ -951,7 +951,7 @@ Finally a straightforward case! :tada::tada:
 
 ## Unit tests in the common module
 
-To support common modules unit testing, Kotlin team made [`kotlin.test`](https://kotlinlang.org/api/latest/kotlin.test/index.html) library. To use it, we need to add the following dependencies into ours common module `build.gradle` file
+To support common modules unit testing, Kotlin team made [`kotlin.test`](https://kotlinlang.org/api/latest/kotlin.test/index.html) library. To use it, we need to add the following dependencies into our common module `build.gradle` file
 
 ```groovy
 testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version" 
@@ -995,7 +995,7 @@ testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 ```
 
-Now We can run tests on JVM using 
+Now we can run tests on JVM using 
 
 ```groovy
 ./gradlew :kotlinLibrary:android:test
@@ -1006,7 +1006,7 @@ An HTML report is generated in `android/build/reports/tests/test/index.html`
 
 #### iOS
 
-We have already done the setup to run the test in the iOS enviroment writing into the `build.gradle` of the ios module
+We have already done the setup to run the test in the iOS environment writing into the `build.gradle` of the iOS module
 
 ```groovy
 konanArtifacts {

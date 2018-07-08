@@ -1,4 +1,5 @@
 apply plugin: 'kotlin-platform-common'
+apply plugin: 'kotlin-kapt'
 
 // Specify a group and a version of the library to access it in Android Studio.
 // By default the project directory name is used as an artifact name thus the full dependency
@@ -6,10 +7,13 @@ apply plugin: 'kotlin-platform-common'
 group = 'com.ndefiorenze.kotlin-lib'
 version = 1.0
 
+
 dependencies {
     // Set up compilation dependency on common Kotlin stdlib
     implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
 
     testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlin_version"
+
+    implementation "com.github.rozag:kozy-redux-base:0.5"
 }
